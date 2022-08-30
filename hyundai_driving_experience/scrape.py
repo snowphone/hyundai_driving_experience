@@ -1,25 +1,39 @@
-import requests_html
+from __future__ import annotations
+
 from bs4 import BeautifulSoup
+from requests_html import (
+    HTML,
+    HTMLResponse,
+    HTMLSession,
+)
 
 
-def main():
-    sess = requests_html.HTMLSession()
+def load_page() -> HTMLResponse:
+    sess = HTMLSession()
 
-    resp = sess.get(
+    resp: HTMLResponse = sess.get(  # type: ignore
         "https://drivingexperience.hyundai.co.kr/kr/scheduleEvent/gallery/board/list?pageIndex=1&detailsKey=&ctgry=&ctgry2=&f=&q="  # noqa: E501
     )
     resp.html.render()
 
-    soup = BeautifulSoup(resp.html.html, features="lxml")
+    return resp
 
-    # print(soup.find_all("a", {"class": "img-wrap"}))
-    print(
-        *[
-            it.text.strip().split('\n')[0]
-            for it in soup.find_all("div", {"class": "txt-area"})
-        ],
-        sep='\n'
-    )
+
+def get_schedules(html: HTML):
+    soup = BeautifulSoup(html.html, features="lxml")
+    raw_strings: list[str] = [
+        it.text for it in soup.find_all("div", {"class": "txt-area"})
+    ]
+
+    return [it.strip().replace("\n", " ") for it in raw_strings]
+
+
+def main():
+    resp = load_page()
+
+    entries = get_schedules(resp.html)
+
+    print(*entries, sep='\n')
 
     return
 
