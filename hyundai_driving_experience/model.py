@@ -30,7 +30,7 @@ def session_scope():
 class History(Base):
     __tablename__ = "history"
 
-    datetime = Column(DateTime, primary_key=True, default=now())
+    datetime = Column(DateTime(timezone=True), primary_key=True, default=now())
     text = Column(String, nullable=False)
 
     @classmethod
