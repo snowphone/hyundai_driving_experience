@@ -7,6 +7,8 @@ from requests_html import (
     HTMLSession,
 )
 
+from hyundai_driving_experience.model import History
+
 
 def load_page() -> HTMLResponse:
     sess = HTMLSession()
@@ -25,7 +27,7 @@ def get_schedules(html: HTML):
         it.text for it in soup.find_all("div", {"class": "txt-area"})
     ]
 
-    return [it.strip().replace("\n", " ") for it in raw_strings]
+    return {it.strip().replace("\n", " ") for it in raw_strings}
 
 
 def main():
@@ -33,7 +35,11 @@ def main():
 
     entries = get_schedules(resp.html)
 
-    print(*entries, sep='\n')
+    latest = History.get_latest()
+
+    print(*(entries - latest), sep="\n")
+
+    History.store(entries)
 
     return
 
