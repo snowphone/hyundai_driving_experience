@@ -28,7 +28,7 @@ def load_page() -> HTMLResponse:
     return resp
 
 
-def get_schedules(html: HTML):
+def get_schedules(html: HTML) -> set[str]:
     soup = BeautifulSoup(html.html, features="lxml")
     raw_strings: list[str] = [
         it.text for it in soup.find_all("div", {"class": "txt-area"})

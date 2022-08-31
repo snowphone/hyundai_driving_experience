@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import os
 from typing import (
     Any,
     Iterable,
 )
 
+from dotenv import load_dotenv
 from sqlalchemy import (
     Column,
     DateTime,
@@ -18,7 +20,9 @@ from sqlalchemy.orm import (
 )
 from sqlalchemy.sql.functions import now
 
-engine = create_engine("sqlite:///history.db")
+load_dotenv()
+
+engine = create_engine(os.getenv("DB_URL"))  # type: ignore
 Base: Any = declarative_base(bind=engine)
 
 
