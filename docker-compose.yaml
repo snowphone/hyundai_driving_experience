@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  scrape:
+    image: hub.sixtyfive.me/hyundai_driving_experience
+    container_name: hyundai_driving_experience
+    volumes:
+      - ./history.db:/app/history.db
+    environment:
+      - TZ=Asia/Seoul
+      - DB_URL=sqlite:////app/history.db
