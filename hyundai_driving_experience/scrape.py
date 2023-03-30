@@ -37,12 +37,16 @@ def get_schedules(html: HTML) -> set[str]:
     return {it.strip().replace("\n", " ") for it in raw_strings}
 
 
-def notify(texts: Iterable[str]):
+def notify(texts: Iterable[str], verbose: bool = False):
     data = "\n".join(texts).encode("utf-8")
-    post(
+    if verbose:
+        print(f"Data: {data}")
+    resp = post(
         "https://ntfy.sixtyfive.me/hyundai_driving_experience",
         data=data,
     )
+    if verbose:
+        print(f"{resp.ok=}, {resp.text=}")
     return
 
 
@@ -58,7 +62,9 @@ def main(args: Namespace):
     if diff:
         print(*diff, sep="\n")
         if args.notify:
-            notify(diff)
+            notify(diff, args.verbose)
+    elif args.verbose:
+        print("New events not found")
 
     History.store(entries)
 
@@ -68,5 +74,6 @@ def main(args: Namespace):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--notify", action="store_true")
+    parser.add_argument("--verbose", action="store_true")
 
     main(parser.parse_args())
