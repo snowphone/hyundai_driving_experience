@@ -20,4 +20,4 @@ RUN poetry install --no-dev
 RUN python ./hyundai_driving_experience/preload.py
 
 
-ENTRYPOINT python ./hyundai_driving_experience/scrape.py
+ENTRYPOINT ["python", "./hyundai_driving_experience/scrape.py" ]
