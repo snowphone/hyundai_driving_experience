@@ -59,12 +59,11 @@ def main(args: Namespace):
 
     diff = entries - latest
 
-    if diff:
-        print(*diff, sep="\n")
-        if args.notify:
-            notify(diff, args.verbose)
-    elif args.verbose:
-        print("New events not found")
+    data = diff if diff else ["No events found"]
+    if args.verbose:
+        print(*data, sep="\n")
+    if args.notify:
+        notify(data, args.verbose)
 
     History.store(entries)
 
