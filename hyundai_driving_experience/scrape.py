@@ -59,10 +59,12 @@ def main(args: Namespace):
 
     diff = entries - latest
 
-    data = diff if diff else ["No events found"]
+    DNE = ["No events found"]
+
+    data = diff if diff else DNE
     if args.verbose:
         print(*data, sep="\n")
-    if args.notify:
+    if args.notify and data != DNE:
         notify(data, args.verbose)
 
     History.store(entries)
