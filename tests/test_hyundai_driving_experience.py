@@ -10,7 +10,6 @@ def test_version():
 
 
 def test_get_schedules():
-
     expected = {
         "HMG 드라이빙 익스피리언스 센터 런칭 이벤트 2022.08.01",
         "2022년 HMG 드라이빙 익스피리언스 9월 프로그램 일정 2022.08.01",
