@@ -6,12 +6,12 @@ from hyundai_driving_experience.scrape import (
 
 
 def test_version():
-    assert __version__ == '0.1.0'
+    assert __version__ == "0.1.0"
 
 
 def test_get_schedules():
     expected = {
-        "HMG 드라이빙 익스피리언스 센터 런칭 이벤트 2022.08.01",
-        "2022년 HMG 드라이빙 익스피리언스 9월 프로그램 일정 2022.08.01",
+        "2023년 HMG 드라이빙 익스피리언스 5월 운영 공지 2023.04.10",
+        "2023년 HMG 드라이빙 익스피리언스 6월 운영 공지 2023.05.01",
     }
     assert expected <= get_schedules(load_page().html)
