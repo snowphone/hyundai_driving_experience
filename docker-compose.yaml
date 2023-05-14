@@ -4,6 +4,7 @@ services:
   scrape:
     image: hub.sixtyfive.me/hyundai_driving_experience
     container_name: hyundai_driving_experience
+    init: true
     volumes:
       - ./history.db:/app/history.db
     environment:
