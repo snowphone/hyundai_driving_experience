@@ -11,7 +11,6 @@ def test_version():
 
 def test_get_schedules():
     expected = {
-        "2023년 HMG 드라이빙 익스피리언스 5월 운영 공지 2023.04.10",
-        "2023년 HMG 드라이빙 익스피리언스 6월 운영 공지 2023.05.01",
+        "2024년 HMG 드라이빙 익스피리언스 9월 운영 공지 2024.08.05",
     }
     assert expected <= get_schedules(load_page().html)
